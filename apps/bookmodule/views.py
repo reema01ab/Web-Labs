@@ -1,10 +1,10 @@
 from django.shortcuts import render
 
-from django.http import HttpResponse
+from django.db.models import Q, Count, Sum, Avg, Max, Min, F, FloatField
+from django.db.models.functions import Cast
 
-from django.db.models import Q, Count, Sum, Avg, Max, Min
+from .models import Book, Publisher,BookL9
 
-from .models import Book, Student
 #def index(request):
  #   name = request.GET.get("name", "")
  #   return render(request, "bookmodule/index.html", {"name": name})
@@ -125,3 +125,62 @@ def lab8_task7(request):
     return render(request, 'bookmodule/student_city_count.html', {
         'city_counts': city_counts
     })
+
+def task1(request):
+    total_quantity = BookL9.objects.aggregate(total=Sum('quantity'))['total'] or 1
+
+    books = BookL9.objects.annotate(
+        availability_percentage=Cast(F('quantity'), FloatField()) * 100.0 / total_quantity
+    )
+
+    return render(request, 'bookmodule/lab9_task1.html', {'books': books})
+
+
+def task2(request):
+    publishers = Publisher.objects.annotate(
+        total_book_stock=Sum('bookl9__quantity')
+    )
+
+    return render(request, 'bookmodule/lab9_task2.html', {'publishers': publishers})
+
+
+def task3(request):
+    publishers = Publisher.objects.annotate(
+        oldest_book_date=Min('bookl9__pubdate')
+    )
+
+    return render(request, 'bookmodule/lab9_task3.html', {'publishers': publishers})
+
+
+def task4(request):
+    publishers = Publisher.objects.annotate(
+        avg_price=Avg('bookl9__price'),
+        min_price=Min('bookl9__price'),
+        max_price=Max('bookl9__price')
+    )
+
+    return render(request, 'bookmodule/lab9_task4.html', {'publishers': publishers})
+
+
+def task5(request):
+    publishers = Publisher.objects.annotate(
+        highly_rated_books=Count('bookl9', filter=Q(bookl9__rating__gte=4)),
+        total_quantity=Sum('bookl9__quantity', filter=Q(bookl9__rating__gte=4))
+    )
+
+    return render(request, 'bookmodule/lab9_task5.html', {'publishers': publishers})
+
+
+def task6(request):
+    publishers = Publisher.objects.annotate(
+        filtered_books_count=Count(
+            'bookl9',
+            filter=Q(
+                bookl9__price__gt=50,
+                bookl9__quantity__lt=5,
+                bookl9__quantity__gte=1
+            )
+        )
+    )
+
+    return render(request, 'bookmodule/lab9_task6.html', {'publishers': publishers})

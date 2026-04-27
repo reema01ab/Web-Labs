@@ -1,0 +1,15 @@
+<h1>Task 2 - Total Book Stock for Each Publisher</h1>
+
+<table border="1">
+    <tr>
+        <th>Publisher</th>
+        <th>Total Stock</th>
+    </tr>
+
+    {% for publisher in publishers %}
+    <tr>
+        <td>{{ publisher.name }}</td>
+        <td>{{ publisher.total_book_stock }}</td>
+    </tr>
+    {% endfor %}
+</table>

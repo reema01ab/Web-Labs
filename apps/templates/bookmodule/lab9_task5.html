@@ -1,0 +1,17 @@
+<h1>Task 5 - Highly Rated Books Count</h1>
+
+<table border="1">
+    <tr>
+        <th>Publisher</th>
+        <th>Highly Rated Books</th>
+        <th>Total Quantity</th>
+    </tr>
+
+    {% for publisher in publishers %}
+    <tr>
+        <td>{{ publisher.name }}</td>
+        <td>{{ publisher.highly_rated_books }}</td>
+        <td>{{ publisher.total_quantity }}</td>
+    </tr>
+    {% endfor %}
+</table>

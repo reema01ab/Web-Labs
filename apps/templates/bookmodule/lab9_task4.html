@@ -1,0 +1,19 @@
+<h1>Task 4 - Average, Min, and Max Book Price</h1>
+
+<table border="1">
+    <tr>
+        <th>Publisher</th>
+        <th>Average Price</th>
+        <th>Min Price</th>
+        <th>Max Price</th>
+    </tr>
+
+    {% for publisher in publishers %}
+    <tr>
+        <td>{{ publisher.name }}</td>
+        <td>{{ publisher.avg_price|floatformat:2 }}</td>
+        <td>{{ publisher.min_price }}</td>
+        <td>{{ publisher.max_price }}</td>
+    </tr>
+    {% endfor %}
+</table>

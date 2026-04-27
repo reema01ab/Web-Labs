@@ -1,0 +1,21 @@
+<h1>Task 3 - Oldest Book Date for Each Publisher</h1>
+
+<table border="1">
+    <tr>
+        <th>Publisher</th>
+        <th>Oldest Book Date</th>
+    </tr>
+
+    {% for publisher in publishers %}
+    <tr>
+        <td>{{ publisher.name }}</td>
+        <td>
+            {% if publisher.oldest_book_date %}
+                {{ publisher.oldest_book_date }}
+            {% else %}
+                No books
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
