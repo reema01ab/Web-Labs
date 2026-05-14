@@ -1,0 +1,30 @@
+<h2>Products List</h2>
+
+<a href="{% url 'product_add' %}">Add Product</a>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Image</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for product in products %}
+    <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>
+            {% if product.image %}
+                <img src="{{ product.image.url }}" width="100">
+            {% else %}
+                No image
+            {% endif %}
+        </td>
+        <td>
+            <a href="{% url 'product_edit' product.id %}">Edit</a>
+            <a href="{% url 'product_delete' product.id %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

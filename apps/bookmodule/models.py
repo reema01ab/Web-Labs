@@ -11,6 +11,17 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+class Address(models.Model):
+    city = models.CharField(max_length=100)
+    def __str__(self):
+        return self.city
+
+class Student(models.Model):
+    name=models.CharField(max_length=50)
+    age=models.IntegerField()
+    address=models.ForeignKey(Address, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
 
 # Lab 9 Models
 class Publisher(models.Model):
@@ -46,3 +57,26 @@ class BookL9(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Address2(models.Model):
+    city = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.city
+
+
+class Student2(models.Model):
+    name = models.CharField(max_length=50)
+    age = models.IntegerField()
+    addresses = models.ManyToManyField(Address2)
+
+    def __str__(self):
+        return self.name
+    
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.IntegerField()
+    image = models.ImageField(upload_to='products/')
+
+    def __str__(self):
+        return self.name
